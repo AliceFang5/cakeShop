@@ -6,87 +6,154 @@
 //
 
 import UIKit
+import Foundation
 
 class cakeListTableViewController: UITableViewController {
 
     @IBOutlet var label: UITableView!
     @IBOutlet weak var tatalPriceLabel: UILabel!
     
-    @IBOutlet weak var count1Label: UILabel!
-    @IBOutlet weak var count2Label: UILabel!
-    @IBOutlet weak var count3Label: UILabel!
-    @IBOutlet weak var count4Label: UILabel!
-    @IBOutlet weak var count5Label: UILabel!
-    @IBOutlet weak var count6Label: UILabel!
-    @IBOutlet weak var count7Label: UILabel!
-    var tatalPrice = 0
-    var count1 = 0
-    var count2 = 0
-    var count3 = 0
-    var count4 = 0
-    var count5 = 0
-    var count6 = 0
-    var count7 = 0
-//    草莓派550
-//    草莓輕蛋糕500
-//    草莓千層800
-//    草莓鮮奶油蛋糕600
-//    草莓巧克力蛋糕600
-//    布朗尼380
-//    檸檬糖霜磅蛋糕400
-//    class Cake{
-//        var name = "草莓蛋糕"
-//        var picture = "straberry1"
-//        var price = 480
-//        var count = 0
-//        let maxmum = 5
-//    }
-//    var cake1 = Cake()
-//    var cake2 = Cake()
-
+    @IBOutlet weak var countLabel1: UILabel!
+    @IBOutlet weak var countLabel2: UILabel!
+    @IBOutlet weak var countLabel3: UILabel!
+    @IBOutlet weak var countLabel4: UILabel!
+    @IBOutlet weak var countLabel5: UILabel!
+    @IBOutlet weak var countLabel6: UILabel!
+    @IBOutlet weak var countLabel7: UILabel!
+    
+    @IBOutlet weak var cakeImage1: UIImageView!
+    @IBOutlet weak var cakeImage2: UIImageView!
+    @IBOutlet weak var cakeImage3: UIImageView!
+    @IBOutlet weak var cakeImage4: UIImageView!
+    @IBOutlet weak var cakeImage5: UIImageView!
+    @IBOutlet weak var cakeImage6: UIImageView!
+    @IBOutlet weak var cakeImage7: UIImageView!
+    
+    @IBOutlet weak var cakeLabel1: UILabel!
+    @IBOutlet weak var cakeLabel2: UILabel!
+    @IBOutlet weak var cakeLabel3: UILabel!
+    @IBOutlet weak var cakeLabel4: UILabel!
+    @IBOutlet weak var cakeLabel5: UILabel!
+    @IBOutlet weak var cakeLabel6: UILabel!
+    @IBOutlet weak var cakeLabel7: UILabel!
+    
+    @IBOutlet weak var priceLabel1: UILabel!
+    @IBOutlet weak var priceLabel2: UILabel!
+    @IBOutlet weak var priceLabel3: UILabel!
+    @IBOutlet weak var priceLabel4: UILabel!
+    @IBOutlet weak var priceLabel5: UILabel!
+    @IBOutlet weak var priceLabel6: UILabel!
+    @IBOutlet weak var priceLabel7: UILabel!
+    
+    struct Cake{
+        let name:String
+        let picture:String
+        let price:Int
+        var count = 0
+//        let maxmum =  5
+    }
+//    var cakeInfo = [Cake]()
+    var cakeInfo = [
+        Cake(name: "布朗尼", picture: "brownie", price: 380),
+        Cake(name: "檸檬糖霜蛋糕", picture: "lemon", price: 400),
+        Cake(name: "草莓派", picture: "straberry1", price: 550),
+        Cake(name: "草莓輕蛋糕", picture: "straberry2", price: 500),
+        Cake(name: "草莓千層", picture: "straberry3", price: 800),
+        Cake(name: "草莓鮮奶油蛋糕", picture: "straberry4", price: 600),
+        Cake(name: "草莓巧克力蛋糕", picture: "straberry5", price: 600),
+    ]
     func checkTatalPrice(){
-
-        tatalPrice = count1*550 + count2*500 + count3*800 + count4*600 + count5*600 + count6*380 + count7*400
-        tatalPriceLabel.text = "總金額NT$ \(tatalPrice)"
+        var tatalPrice = 0
+        for i in 0...6{
+            tatalPrice += cakeInfo[i].count * cakeInfo[i].price
+        }
+        
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.locale = Locale(identifier: "zh_TW")
+        formatter.maximumFractionDigits = 0
+        let priceString = formatter.string(from: NSNumber(value: tatalPrice))
+        tatalPriceLabel.text = "總金額NT" + priceString!
+    }
+    func checkCount(){
+        countLabel1.text = String("數量：\(cakeInfo[0].count)")
+        countLabel2.text = String("數量：\(cakeInfo[1].count)")
+        countLabel3.text = String("數量：\(cakeInfo[2].count)")
+        countLabel4.text = String("數量：\(cakeInfo[3].count)")
+        countLabel5.text = String("數量：\(cakeInfo[4].count)")
+        countLabel6.text = String("數量：\(cakeInfo[5].count)")
+        countLabel7.text = String("數量：\(cakeInfo[6].count)")
+    }
+    func checkCountAndPrice(){
+        checkCount()
+        checkTatalPrice()
+    }
+    func initCakeLabel(){
+        cakeLabel1.text = "\(cakeInfo[0].name)"
+        cakeLabel2.text = "\(cakeInfo[1].name)"
+        cakeLabel3.text = "\(cakeInfo[2].name)"
+        cakeLabel4.text = "\(cakeInfo[3].name)"
+        cakeLabel5.text = "\(cakeInfo[4].name)"
+        cakeLabel6.text = "\(cakeInfo[5].name)"
+        cakeLabel7.text = "\(cakeInfo[6].name)"
+    }
+    func initPrice(){
+//        priceLabel1.text = "NT$" + cakeInfo[0].pric.description
+        priceLabel1.text = "NT$\(cakeInfo[0].price)"
+        priceLabel2.text = "NT$\(cakeInfo[1].price)"
+        priceLabel3.text = "NT$\(cakeInfo[2].price)"
+        priceLabel4.text = "NT$\(cakeInfo[3].price)"
+        priceLabel5.text = "NT$\(cakeInfo[4].price)"
+        priceLabel6.text = "NT$\(cakeInfo[5].price)"
+        priceLabel7.text = "NT$\(cakeInfo[6].price)"
+    }
+    func initImage(){
+        cakeImage1.image = UIImage(named: "\(cakeInfo[0].picture)")
+        cakeImage2.image = UIImage(named: "\(cakeInfo[1].picture)")
+        cakeImage3.image = UIImage(named: "\(cakeInfo[2].picture)")
+        cakeImage4.image = UIImage(named: "\(cakeInfo[3].picture)")
+        cakeImage5.image = UIImage(named: "\(cakeInfo[4].picture)")
+        cakeImage6.image = UIImage(named: "\(cakeInfo[5].picture)")
+        cakeImage7.image = UIImage(named: "\(cakeInfo[6].picture)")
+    }
+    func initial(){
+        initImage()
+        initCakeLabel()
+        initPrice()
+        checkTatalPrice()
     }
 
     @IBAction func stepper1(_ sender: UIStepper) {
-        count1 = Int(sender.value)
-        count1Label.text = String("數量：\(count1)")
-        checkTatalPrice()
+        cakeInfo[0].count = Int(sender.value)
+        checkCountAndPrice()
     }
     @IBAction func stepper2(_ sender: UIStepper) {
-        count2 = Int(sender.value)
-        count2Label.text = String("數量：\(count2)")
-        checkTatalPrice()
+        cakeInfo[1].count = Int(sender.value)
+        checkCountAndPrice()
     }
     @IBAction func stepper3(_ sender: UIStepper) {
-        count3 = Int(sender.value)
-        count3Label.text = String("數量：\(count3)")
-        checkTatalPrice()
+        cakeInfo[2].count = Int(sender.value)
+        checkCountAndPrice()
     }
     @IBAction func stepper4(_ sender: UIStepper) {
-        count4 = Int(sender.value)
-        count4Label.text = String("數量：\(count4)")
-        checkTatalPrice()
+        cakeInfo[3].count = Int(sender.value)
+        checkCountAndPrice()
    }
     @IBAction func stepper5(_ sender: UIStepper) {
-        count5 = Int(sender.value)
-        count5Label.text = String("數量：\(count5)")
-        checkTatalPrice()
+        cakeInfo[4].count = Int(sender.value)
+        checkCountAndPrice()
    }
     @IBAction func stepper6(_ sender: UIStepper) {
-        count6 = Int(sender.value)
-        count6Label.text = String("數量：\(count6)")
-        checkTatalPrice()
+        cakeInfo[5].count = Int(sender.value)
+        checkCountAndPrice()
     }
     @IBAction func stepper7(_ sender: UIStepper) {
-        count7 = Int(sender.value)
-        count7Label.text = String("數量：\(count7)")
-        checkTatalPrice()
+        cakeInfo[6].count = Int(sender.value)
+        checkCountAndPrice()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        initial()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
